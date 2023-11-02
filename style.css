@@ -6,7 +6,6 @@
   --background: #000;
 }
 
-
 *{
   margin: 0;
   padding: 0;
@@ -23,15 +22,102 @@ body{
   overflow-x: hidden;
 }
 
+h1{
+  font-size: 65px;
+  font-weight: 400;
+}
+
+h2{
+  font-weight: 300;
+}
+
+p{
+  line-height: 1.4;
+}
+
+a, button{
+  font-weight: 400;
+  border: 2px solid var(--color);
+  padding-block: 0.6em;
+  border-radius: 50px;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+button{
+  width: 100%;
+  background: none;
+  cursor: pointer;
+}
+
+a:hover, button:hover, .button.active{
+  background: var(--color);
+  color: var(--background);
+}
+
+::after, ::before{
+  content: '';
+  position: absolute;
+}
+
+
+/*______________________________________*/
 .container{
   width: 30%;
   height: 100%;
   padding: 20px;
+  z-index: 100;
+  background: var(--background);
 }
 
+.container-box{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container-box > a{
+  width: 100%;
+}
+
+
+/*______________________________________*/
 .container-two{
   width: 70%;
   height: 100%;
+}
+
+.container-two > .heading{
+  position: relative;
+  display: flex;
+  padding-block: 30px 10px;
+}
+
+.container-two > .heading::after,
+.container-two > .heading::before{
+  top: 0;
+  height: 100%;
+  width: 15%;
+  background: linear-gradient(to right, var(--background), transparent);
+}
+
+.container-two > .heading::after{
+  left: 0;
+}
+
+.container-two > .heading::before{
+  right: 0;
+  rotate: 180deg;
+  z-index: 10;
+}
+
+.container-two > .heading > h1{
+  white-space: nowrap;
+  animation: marquee 3s infinite linear forwards;
 }
 
 .container-two > .canvas{
@@ -68,53 +154,95 @@ body{
   overflow: hidden;
 }
 
-a{
+
+/*______________________________________*/
+.container-box.intro{
+  align-items: center;
+}
+
+.container-box.intro h3{
+  text-align: center;
+  border: 8px solid var(--color);
+  border-radius: 50%;
+  padding: 20px;
   font-weight: 400;
-  border: 2px solid var(--color);
-  padding-block: 20px;
-  border-radius: 50px;
-  font-size: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-box.intro > h3 > span{
+  font-size: 30px;
+}
+
+
+/*______________________________________*/
+.container-box.marquee{
+  position: relative;
+  overflow: hidden;
   width: 100%;
   display: flex;
-  justify-content: center;
-  transition: all 0.3s;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-a:hover{
-  background: var(--color);
-  color: var(--background);
+.container-box.marquee::after, 
+.container-box.marquee::before{
+  top: 0;
+  height: 100%;
+  width: 15%;
+  background: linear-gradient(to right, var(--background), transparent);
 }
 
-h1{
-  font-size: 65px;
-  font-weight: 400;
+.container-box.marquee::after{
+  left: 0;
 }
 
-h2{
-  font-weight: 300;
+.container-box.marquee::before{
+  right: 0;
+  rotate: 180deg;
+  z-index: 1;
 }
 
-p{
-  line-height: 1.4;
+.container-box.marquee > div {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
 }
 
-.intro > h1,
-.intro > h3{
-  margin: 0 auto;
+.container-box.marquee > div h2{
+  white-space: nowrap;
+  padding-block: 10px;
+  will-change: transform;
+  transform: translateX(0);
+  animation: marquee 5s linear infinite;
 }
 
-.scratch{
+@keyframes marquee {
+  from { 
+    transform: translateX(0%); 
+  }
+  to { 
+    transform: translateX(-100%); 
+  }
+}
+
+
+/*______________________________________*/
+.container-box.png-two .scratch{
   position: relative;
   font-family: 'Scratched on X Ray', sans-serif;         
-  z-index: 5;    
+  z-index: 5;   
   color: #a0fe2f;              
 }
 
-.scratch::after{
+.container-box.png-two .scratch::after{
   content: 'EVERYTHING MADE FROM SCRATCH';
   position: absolute;
   left: 0;
-  color: var(--color);
+  color: var(--background);
   animation: scratch 0.3s infinite linear;
 }
 
@@ -128,15 +256,17 @@ p{
   }
 }
 
-.blink > h1{
+
+/*______________________________________*/
+.container-box.blink > h1{
   animation: blink 0.6s linear infinite;
 }
 
-.blink > h1:nth-child(2){
+.container-box.blink > h1:nth-child(2){
   animation-delay: 0.2s;
 }
 
-.blink > h1:nth-child(3){
+.container-box.blink > h1:nth-child(3){
   animation-delay: 0.4s;
 }
 
@@ -150,80 +280,47 @@ p{
   }
 }
 
-.container-box{
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
 
-.flour{
-  text-align: center;
-  border: 8px solid var(--color);
-  border-radius: 50%;
-  padding: 20px;
-  font-weight: 400;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-span{
-  font-size: 30px;
-}
-
-.marquee{
-  position: relative;
-  overflow: hidden;
+/*______________________________________*/
+.menu{
+  height: 100vh;
   width: 100%;
+  background: var(--background);
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
 }
 
-.marquee::after, .marquee::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 15%;
-  background: linear-gradient(to right, var(--background), transparent);
+.menu .menu-container{
+  width: 70%;
+  padding: 20px;
 }
 
-.marquee::after{
-  left: 0;
+.menu .menu-container .menu-card{
+  display: block;
+  margin: auto;
+  height: 90%;
+  width: 43%;
+  background: var(--color);
+  rotate: -5deg;
+  margin-top: 30px;
+  padding: 20px;
 }
 
-.marquee::before{
-  right: 0;
-  rotate: 180deg;
-  z-index: 1;
+.menu .menu-container .menu-card:nth-child(2){
+  rotate: 5deg;
 }
 
-.marquee > div h2{
-  white-space: nowrap;
-  padding-block: 10px;
-  will-change: transform;
-  transform: translateX(0);
-  animation: marquee 20s linear infinite;
+.menu .menu-container .menu-card.hide{
+  display: none;
 }
 
-.marquee > div h2:nth-child(2){
-  animation: marquee 12s linear infinite;
+.menu .menu-container .menu-card > h2,
+.menu .menu-container .menu-card > p,
+.menu .menu-container .menu-card > p span{
+  color: var(--background);
 }
 
-.marquee > div h2:nth-child(3){
-  animation: marquee 15s linear infinite;
-}
-
-@keyframes marquee {
-  0%, 100% { 
-    transform: translateX(0%); 
-  }
-  50% { 
-    transform: translateX(-50%); 
-  }
+.menu .menu-container .menu-card > p{
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 }
