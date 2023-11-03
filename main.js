@@ -1,17 +1,34 @@
 import * as THREE from 'three'
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
+import { gsap } from "gsap";
 import './style.css'
 
+gsap.registerPlugin(ScrollTrigger) 
 
+
+//_____________________________________________________
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth * 0.7 / window.innerHeight, 0.1, 1000 )
 
-
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize( window.innerWidth * 0.7, window.innerHeight )
-document.body.appendChild( renderer.domElement )
+const webGl= document.getElementById('webGL');
+webGl.appendChild(renderer.domElement);
 
+//Resize
+window.addEventListener('resize', () => {
+	const width = window.innerWidth * 0.7;
+	const height = window.innerHeight;
+
+	// Update camera
+	camera.aspect = width / height;
+	camera.updateProjectionMatrix();
+
+	// Update renderer
+	renderer.setSize(width, height);
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
 
 const webGLDiv = document.getElementById('webGL')
 webGLDiv.appendChild( renderer.domElement )
@@ -35,7 +52,6 @@ scene.add( dough )
 camera.position.z = 5
 const clock = new THREE.Clock()
 
-
 function animate() {
 	const elapsedTime = clock.getElapsedTime()
 	//Update material
@@ -48,19 +64,36 @@ function animate() {
 animate()
 
 
-// const menuBtn = document.getElementById("menuBtn")
+
+//_____________________________________________________
+//MENU_________________________________________________
+const menuBtn = document.getElementById("menuBtn")
 // const menu = document.getElementById("menu")
 
-// menuBtn.addEventListener('click', () => {
-// 	menu.classList.toggle('isActive')
-// })
+menuBtn.addEventListener('click', () => {
+	menuBtn.classList.toggle('isActive')
+})
 
-// window.addEventListener('click', (e) => {
-// 	if (e.target !== menuBtn && !menu.contains(e.target)) {
-// 	  menu.classList.remove('isActive');
-// 	}
-//   });
+gsap.to(".menuBtn", {
+    opacity: 1,
+	pointerEvents: "all",
+    scrollTrigger: {
+      trigger: "body",
+      start: "top top",
+      toggleActions: "restart none none reverse"
+    },
+});
 
 
+window.addEventListener('click', (e) => {
+	if (e.target !== menuBtn && !menuBtn.contains(e.target)) {
+	  menuBtn.classList.remove('isActive');
+	}
+  });
+
+
+
+//__________________________________________________________
+//TAB TITLE_________________________________________________
 window.onblur = function () { document.title = 'OVERPROFED DOUGH!! Come back!!!'; }
 window.onfocus = function () { document.title = 'Doughboyz Bakery - 🍞 Sourdough Bread Only'; }

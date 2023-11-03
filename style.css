@@ -4,6 +4,8 @@
 :root{
   --color: #f5f5f5;
   --background: #000;
+
+  --padding: clamp(0.3125rem, -0.8594rem + 3.75vw, 1.25rem);
 }
 
 *{
@@ -22,13 +24,20 @@ body{
   overflow-x: hidden;
 }
 
+img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 h1{
-  font-size: 65px;
+  font-size: clamp(2.5rem, 1rem + 3.3vw, 4.0625rem);
   font-weight: 400;
 }
 
 h2{
   font-weight: 300;
+  font-size: clamp(1.3125rem, 1.0781rem + 0.75vw, 1.5rem);
 }
 
 p{
@@ -40,7 +49,7 @@ a, button{
   border: 2px solid var(--color);
   padding-block: 0.6em;
   border-radius: 50px;
-  font-size: 32px;
+  font-size: clamp(1.5rem, 0.875rem + 2vw, 2rem);
   display: flex;
   justify-content: center;
   transition: all 0.3s;
@@ -67,17 +76,18 @@ a:hover, button:hover, .button.active{
 .container{
   width: 30%;
   height: 100%;
-  padding: 20px;
+  padding: var(--padding);
   z-index: 100;
   background: var(--background);
 }
 
 .container-box{
-  padding: 20px;
+  padding: var(--padding);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding-block: 10px;
 }
 
 .container-box > a{
@@ -85,7 +95,7 @@ a:hover, button:hover, .button.active{
 }
 
 
-/*______________________________________*/
+/*CONTAINER TWO______________________________________*/
 .container-two{
   width: 70%;
   height: 100%;
@@ -95,6 +105,7 @@ a:hover, button:hover, .button.active{
   position: relative;
   display: flex;
   padding-block: 30px 10px;
+  overflow: hidden;
 }
 
 .container-two > .heading::after,
@@ -128,6 +139,8 @@ a:hover, button:hover, .button.active{
 
 .container-two > .canvas #webGL{
   position: sticky;
+  width: 100%;
+  overflow: hidden;
   top: 0;
   right: 0;
   z-index: -1;
@@ -135,16 +148,17 @@ a:hover, button:hover, .button.active{
 
 .container-two > .images{
   width: 100%;
-  padding: 20px;
+  padding: var(--padding);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--padding);
 }
 
 .container-two > .images div{
   display: flex;
-  gap: 20px;
+  gap: var(--padding);
   height: 100vh;
+  width: 100%;
 }
 
 .container-two > .images div img{
@@ -164,7 +178,7 @@ a:hover, button:hover, .button.active{
   text-align: center;
   border: 8px solid var(--color);
   border-radius: 50%;
-  padding: 20px;
+  padding: var(--padding);
   font-weight: 400;
   display: flex;
   flex-direction: column;
@@ -206,7 +220,7 @@ a:hover, button:hover, .button.active{
   z-index: 1;
 }
 
-.container-box.marquee > div {
+.container-box.marquee > div{
   width: 100%;
   display: flex;
   overflow: hidden;
@@ -281,7 +295,7 @@ a:hover, button:hover, .button.active{
 }
 
 
-/*______________________________________*/
+/*MENU NEXT PAGE______________________________________*/
 .menu{
   height: 100vh;
   width: 100%;
@@ -291,18 +305,18 @@ a:hover, button:hover, .button.active{
 
 .menu .menu-container{
   width: 70%;
-  padding: 20px;
+  padding: var(--padding);
 }
 
 .menu .menu-container .menu-card{
   display: block;
   margin: auto;
   height: 90%;
-  width: 43%;
+  width: 400px;
   background: var(--color);
   rotate: -5deg;
   margin-top: 30px;
-  padding: 20px;
+  padding: var(--padding);
 }
 
 .menu .menu-container .menu-card:nth-child(2){
@@ -323,4 +337,146 @@ a:hover, button:hover, .button.active{
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
+}
+
+
+/*MENU NAV______________________________________*/
+.menuBtn{
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 20%;
+  min-width: 300px;
+  background: var(--color);
+  z-index: 10000;
+  clip-path: circle(4% at 82.5% 7.5%);
+  transition: all 0.4s;
+  padding: var(--padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.menuBtn > .toggle{
+  position: absolute;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  display: flex;
+  height: 100px;
+  width: 100px;
+}
+
+.menuBtn > .toggle::after,
+.menuBtn > .toggle::before{
+  top: 0;
+  height: 100%;
+  width: 20%;
+  background: linear-gradient(to right, var(--color), transparent);
+}
+
+.menuBtn > .toggle::after{
+  left: 0;
+}
+
+.menuBtn > .toggle::before{
+  right: 0;
+  z-index: 10;
+  rotate: 180deg;
+}
+
+.menuBtn > .toggle > p{
+  white-space: nowrap;
+  margin: auto 0;
+  color: var(--background);
+  cursor: pointer;
+  padding-block: 20px;
+  animation: marquee 1s infinite linear;
+}
+
+.menuBtn > a{
+  color: var(--background);
+  border: 2px solid var(--background);
+  font-size: 25px;
+}
+
+.menuBtn > .toggle > a:hover{
+  background: var(--background);
+  color: var(var(--color));
+}
+
+
+.menuBtn.isActive{
+  clip-path: circle(100%);
+}
+
+
+/*RESPONSIVE______________________________________*/
+@media (max-width: 1200px){
+  .container{
+    width: 40%
+  }
+}
+
+
+@media (max-width: 1024px){
+  .container-two > .images > div{
+    height: 85vh
+  }
+}
+
+@media (max-width: 768px){
+  .container{
+    width: 50%;
+  }
+
+  .menu-a-tags{
+    display: none;
+  }
+
+  .menuBtn{
+    width: 50%;
+  }
+
+  .menu .menu-container .menu-card{
+    width: 350px
+  }
+}
+
+@media (max-width: 620px){
+  .container{
+    width: 100%;
+  }
+
+  .container-two{
+    display: none;
+  }
+
+  .menuBtn{
+    width: 100%;
+  }
+
+  .container-box.intro > h1{
+    font-size: clamp(3.125rem, 2.3438rem + 2.5vw, 3.75rem);
+  }
+}
+
+@media (max-width: 550px){
+  .menu{
+    flex-direction: column;
+  }
+
+  .menu .menu-container{
+    width: 100%;
+  }
+
+  .menu .menu-container .menu-card,
+  .menu .menu-container .menu-card:nth-child(2){
+    width: 100%;
+    height: 100%;
+    rotate: 0deg;
+  }
 }
